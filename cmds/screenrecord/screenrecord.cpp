@@ -165,7 +165,7 @@ static status_t prepareEncoder(float displayFps, sp<MediaCodec>* pCodec,
     format->setInt32("width", gVideoWidth);
     format->setInt32("height", gVideoHeight);
     format->setString("mime", kMimeTypeAvc);
-    format->setInt32("color-format", OMX_COLOR_FormatAndroidOpaque);
+    format->setInt32("color-format", OMX_COLOR_FormatYUV420Planar);
     format->setInt32("bitrate", gBitRate);
     format->setFloat("frame-rate", displayFps);
     format->setInt32("i-frame-interval", 10);
