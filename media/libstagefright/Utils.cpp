@@ -45,6 +45,8 @@
 #include <media/AudioParameter.h>
 #include <system/audio.h>
 
+#include <media/stagefright/FFMPEGSoftCodec.h>
+
 namespace android {
 
 static status_t copyNALUToABuffer(sp<ABuffer> *buffer, const uint8_t *ptr, size_t length) {
@@ -1094,7 +1096,14 @@ status_t convertMetaDataToMessage(
         memcpy(buffer->data(), data, size);
     }
 
+    FFMPEGSoftCodec::convertMetaDataToMessageFF(meta, &msg);
     *format = msg;
+
+#if 0
+    ALOGI("convertMetaDataToMessage from:");
+    meta->dumpToLog();
+    ALOGI("  to: %s", msg->debugString(0).c_str());
+#endif
 
     return OK;
 }
@@ -1506,8 +1515,10 @@ void convertMessageToMetaData(const sp<AMessage> &msg, sp<MetaData> &meta) {
 
     // XXX TODO add whatever other keys there are
 
+    FFMPEGSoftCodec::convertMessageToMetaDataFF(msg, meta);
+
 #if 0
-    ALOGI("converted %s to:", msg->debugString(0).c_str());
+    ALOGI("convertMessageToMetaData from %s to:", msg->debugString(0).c_str());
     meta->dumpToLog();
 #endif
 }

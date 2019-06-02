@@ -34,6 +34,8 @@
 #include <android/hidl/allocator/1.0/IAllocator.h>
 #include <android/hidl/memory/1.0/IMemory.h>
 
+#include <system/audio.h>
+
 #define TRACK_BUFFER_TIMING     0
 
 namespace android {
@@ -97,6 +99,8 @@ struct ACodec : public AHierarchicalStateMachine, public CodecBase {
 
 protected:
     virtual ~ACodec();
+    virtual status_t setupCustomCodec(
+            status_t err, const char *mime, const sp<AMessage> &msg);
 
 private:
     struct BaseState;
@@ -456,9 +460,11 @@ private:
             int32_t maxOutputChannelCount, const drcParams_t& drc,
             int32_t pcmLimiterEnable);
 
-    status_t setupAC3Codec(bool encoder, int32_t numChannels, int32_t sampleRate);
+    status_t setupAC3Codec(bool encoder, int32_t numChannels, int32_t sampleRate,
+            AudioEncoding encoding = kAudioEncodingPcm16bit);
 
-    status_t setupEAC3Codec(bool encoder, int32_t numChannels, int32_t sampleRate);
+    status_t setupEAC3Codec(bool encoder, int32_t numChannels, int32_t sampleRate,
+            AudioEncoding encoding = kAudioEncodingPcm16bit);
 
     status_t selectAudioPortFormat(
             OMX_U32 portIndex, OMX_AUDIO_CODINGTYPE desiredFormat);
