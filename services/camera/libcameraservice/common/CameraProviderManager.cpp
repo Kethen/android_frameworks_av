@@ -69,7 +69,7 @@ status_t CameraProviderManager::initialize(wp<CameraProviderManager::StatusListe
 
     // See if there's a passthrough HAL, but let's not complain if there's not
     addProviderLocked(kLegacyProviderName, /*expected*/ false);
-    addProviderLocked(kExternalProviderName, /*expected*/ false);
+    //addProviderLocked(kExternalProviderName, /*expected*/ false);
 
     return OK;
 }
